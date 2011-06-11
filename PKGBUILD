@@ -42,12 +42,16 @@ provides=("php=$pkgver")
 conflicts=('php')
 source=("http://www.php.net/distributions/php-${pkgver}.tar.bz2"
         "http://download.suhosin.org/suhosin-patch-${_suhosinver}.patch.gz"
-        'php.ini'
-        'db-configure.patch')
+        'gmp-fix.patch'
+        'apache.conf'
+        'php.ini')
+#        'db-configure.patch')
 md5sums=('3b0bd012bd53bac9a5fefca61eccd5c6'
          'd815fc99a0c25c21f5df28551fcbb001'
-         '50b6a4ce330b016e19cb922d202ab170'
-         '74e5ce5a02488ec91b1c59f539e42936')
+         'a8016acf83c0812f817ef5d1e1b796aa'
+         'dec2cbaad64e3abf4f0ec70e1de4e8e9'
+         '50b6a4ce330b016e19cb922d202ab170')
+#         '74e5ce5a02488ec91b1c59f539e42936')
 
 build() {
   phpconfig="--prefix=/usr \
@@ -134,8 +138,8 @@ build() {
 
   cd ${srcdir}/php-${pkgver}
 
-  # apply db patch
-  patch -p0 -i ${srcdir}/db-configure.patch
+  # apply GMP fix patch
+  patch -p1 -i ${srcdir}/gmp-fix.patch
 
   # apply suhosin patch
   patch -p1 -i ${srcdir}/suhosin-patch-${_suhosinver}.patch
